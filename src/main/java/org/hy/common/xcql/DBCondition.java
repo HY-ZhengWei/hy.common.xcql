@@ -690,7 +690,16 @@ public class DBCondition implements Serializable
             
             for (String v_Key : this.placeholders.keySet())
             {
-                this.conditionFel = StringHelp.replaceAll(this.conditionFel ,DBCQL.$Placeholder + v_Key ,StringHelp.replaceAll(v_Key ,"." ,"_"));
+                // 格式为  {:占位符}
+                if ( v_Key.startsWith("{") )
+                {
+                    this.conditionFel = StringHelp.replaceAll(this.conditionFel ,v_Key ,StringHelp.replaceAll(v_Key.substring(2 ,v_Key.length() - 1) ,"." ,"_"));
+                }
+                // 格式为  :占位符
+                else
+                {
+                    this.conditionFel = StringHelp.replaceAll(this.conditionFel ,DBCQL.$Placeholder + v_Key ,StringHelp.replaceAll(v_Key ,"." ,"_"));
+                }
             }
             
             this.conditionFel = StringHelp.replaceAll(this.conditionFel ,$Fel_BlockingUp ,new String[]{""});

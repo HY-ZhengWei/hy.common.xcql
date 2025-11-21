@@ -383,4 +383,25 @@ public class JU_XCQL
         $Logger.info(v_Count);
     }
     
+    
+    
+    /**
+     * 删除节点及节点中的所有属性
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2025-11-21
+     * @version     v1.0
+     *
+     */
+    @Test
+    public void test_Delete_001_All()
+    {
+        DataSourceConfig v_Param = new DataSourceConfig();
+        
+        XCQL v_XCQL  = (XCQL) XJava.getObject("XCQL_Delete_001_All");
+        int  v_Count = v_XCQL.executeUpdate(v_Param);
+        
+        $Logger.info(v_Count);
+    }
+    
 }

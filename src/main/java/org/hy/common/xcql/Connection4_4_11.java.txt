@@ -1,7 +1,6 @@
 package org.hy.common.xcql;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.hy.common.xml.log.Logger;
 import org.neo4j.driver.Bookmark;
@@ -10,7 +9,6 @@ import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Transaction;
-import org.neo4j.driver.TransactionCallback;
 import org.neo4j.driver.TransactionConfig;
 import org.neo4j.driver.TransactionWork;
 import org.neo4j.driver.Value;
@@ -29,9 +27,9 @@ import org.neo4j.driver.Value;
  * @createDate  2017-07-13
  * @version     v1.0
  */
-public class Connection implements Session
+public class Connection4_4_11 implements Session
 {
-    private static final Logger $Logger = new Logger(Connection.class ,true);
+    private static final Logger $Logger = new Logger(Connection4_4_11.class ,true);
     
     
     
@@ -46,7 +44,7 @@ public class Connection implements Session
     
     
     
-    public Connection(final Session i_Connection ,final DataSourceCQL i_DataSourceCQL)
+    public Connection4_4_11(final Session i_Connection ,final DataSourceCQL i_DataSourceCQL)
     {
         this.conn          = i_Connection;
         this.dataSourceCQL = i_DataSourceCQL;
@@ -199,7 +197,6 @@ public class Connection implements Session
 
 
 
-    @SuppressWarnings("deprecation")
     @Override
     public <T> T readTransaction(TransactionWork<T> work)
     {
@@ -208,7 +205,6 @@ public class Connection implements Session
 
 
 
-    @SuppressWarnings("deprecation")
     @Override
     public <T> T readTransaction(TransactionWork<T> work ,TransactionConfig config)
     {
@@ -217,7 +213,6 @@ public class Connection implements Session
 
 
 
-    @SuppressWarnings("deprecation")
     @Override
     public <T> T writeTransaction(TransactionWork<T> work)
     {
@@ -226,7 +221,6 @@ public class Connection implements Session
 
 
 
-    @SuppressWarnings("deprecation")
     @Override
     public <T> T writeTransaction(TransactionWork<T> work ,TransactionConfig config)
     {
@@ -259,7 +253,6 @@ public class Connection implements Session
 
 
 
-    @SuppressWarnings("deprecation")
     @Override
     public Bookmark lastBookmark()
     {
@@ -268,26 +261,11 @@ public class Connection implements Session
 
 
 
+    @SuppressWarnings("deprecation")
     @Override
-    public <T> T executeRead(TransactionCallback<T> callback ,TransactionConfig config)
+    public void reset()
     {
-        return this.conn.executeRead(callback ,config);
-    }
-
-
-
-    @Override
-    public <T> T executeWrite(TransactionCallback<T> callback ,TransactionConfig config)
-    {
-        return this.conn.executeWrite(callback ,config);
-    }
-
-
-
-    @Override
-    public Set<Bookmark> lastBookmarks()
-    {
-        return this.lastBookmarks();
+        this.conn.reset();
     }
     
 }

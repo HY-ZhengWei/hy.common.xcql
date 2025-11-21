@@ -61,19 +61,25 @@ public class DBCQL implements Serializable
                                                                          
     /** 占位符是什么字符 */
     public  static final String              $Placeholder                = "#";
-                                                                         
-                                                                         
-                                                                         
+    
+    
+    
+    /** 未知语法 */
     public final static int                  $DBCQL_TYPE_UNKNOWN         = -1;
-                                                                         
+                            
+    /** 查询语法 */
     public final static int                  $DBCQL_TYPE_MATCH           = 1;
-                                                                         
+    
+    /** 添加语法 */
     public final static int                  $DBCQL_TYPE_CREATE          = 2;
-                                                                         
+    
+    /** 修改语法 */
     public final static int                  $DBCQL_TYPE_SET             = 3;
-                                                                         
+    
+    /** 删除语法 */
     public final static int                  $DBCQL_TYPE_DELETE          = 4;
-                                                                         
+    
+    /** 定义语法 */
     public final static int                  $DBCQL_TYPE_DDL             = 6;
     
     

@@ -1,10 +1,12 @@
 package org.hy.common.xcql.junit;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.hy.common.xml.log.Logger;
 import org.junit.Test;
 import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Config;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 import org.neo4j.driver.Record;
@@ -12,6 +14,7 @@ import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.SessionConfig;
 import org.neo4j.driver.Value;
+import org.neo4j.driver.summary.SummaryCounters;
 
 
 
@@ -33,8 +36,8 @@ public class JU_Neo4j
     @Test
     public void test_Neo4j_001()
     {
-        Driver        v_Driver        = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j", "ZhengWei@qq.com"));
-        SessionConfig v_SessionConfig = SessionConfig.forDatabase("cdc");
+        Driver        v_Driver        = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j", "hy.ZhengWei@qq.com"));
+        SessionConfig v_SessionConfig = SessionConfig.forDatabase("callflow");
         Session       v_Session       = v_Driver.session(v_SessionConfig);
         
         Result v_Result = v_Session.run("MATCH (n:`数据源`) ,(r:`源端表`) RETURN n.id ,r.id AS id2");
@@ -75,8 +78,8 @@ public class JU_Neo4j
     @Test
     public void test_Neo4j_002()
     {
-        Driver        v_Driver        = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j", "ZhengWei@qq.com"));
-        SessionConfig v_SessionConfig = SessionConfig.forDatabase("cdc");
+        Driver        v_Driver        = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j", "hy.ZhengWei@qq.com"));
+        SessionConfig v_SessionConfig = SessionConfig.forDatabase("callflow");
         Session       v_Session       = v_Driver.session(v_SessionConfig);
         
         Result v_Result          = v_Session.run("CREATE (:测试 {name: '测试01'})");
@@ -95,8 +98,8 @@ public class JU_Neo4j
     @Test
     public void test_Neo4j_003()
     {
-        Driver        v_Driver        = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j", "ZhengWei@qq.com"));
-        SessionConfig v_SessionConfig = SessionConfig.forDatabase("cdc");
+        Driver        v_Driver        = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j", "hy.ZhengWei@qq.com"));
+        SessionConfig v_SessionConfig = SessionConfig.forDatabase("callflow");
         Session       v_Session       = v_Driver.session(v_SessionConfig);
         
         Result v_Result   = v_Session.run("MATCH (n:测试) WHERE n.name = '测试01' SET n.age = 18");
@@ -106,6 +109,38 @@ public class JU_Neo4j
         
         v_Session.close();
         v_Driver.close();
+    }
+    
+    
+    
+    public static void main(String [] args)
+    {
+        // 1. 5.x/6.x 强类型连接池配置（更清晰，推荐）
+        Config config = Config.builder()
+                .withMaxConnectionPoolSize(10) // 最大连接池大小
+                .withConnectionAcquisitionTimeout(10, TimeUnit.SECONDS) // 连接获取超时
+                .withConnectionTimeout(10, TimeUnit.SECONDS) // 连接超时
+                .withMaxConnectionLifetime(1, TimeUnit.HOURS) // 连接最大生命周期
+                .build();
+
+        // 2. Driver 全局单例（重点！不要每次操作都创建 Driver，开销极大）
+        try ( Driver v_Driver = GraphDatabase.driver("neo4j://127.0.0.1:7687" ,AuthTokens.basic("neo4j" ,"hy.ZhengWei@qq.com") ,config) )
+        {
+            // 3. 函数式事务（自动管理 Session/事务，无泄漏风险）
+            SummaryCounters counters = v_Driver.session(SessionConfig.forDatabase("callflow")).executeWrite(tx -> { // 写操作用
+                                                                                                                    // executeWrite
+                
+                v_Driver.verifyConnectivity();
+                Result result = tx.run("CREATE (:测试 {name: '测试01'})");
+                return result.consume().counters();
+            });
+            $Logger.info("创建节点数量：" + counters.nodesCreated());
+            $Logger.info("设置属性数量：" + counters.propertiesSet());
+        }
+        catch (Exception e)
+        {
+            $Logger.error("插入节点失败" ,e);
+        }
     }
     
 }

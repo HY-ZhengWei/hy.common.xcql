@@ -6,13 +6,13 @@
 
     <groupId>cn.openapis</groupId>
     <artifactId>hy.common.xcql</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>cn.openapis.hy.common.xcql</name>
     <!-- https://gitee.com/HY-ZhengWei/hy.common.xcql -->
     <url>https://github.com/HY-ZhengWei/hy.common.xcql</url>
-    <description>cn.openapis.hy.common.xcql</description>
+    <description>图谱组件XCQL（Graph component XCQL）</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -54,14 +54,14 @@
         <dependency>
             <groupId>cn.openapis</groupId>
             <artifactId>hy.common.base</artifactId>
-            <version>1.0.186</version>
+            <version>1.0.202</version>
             <scope>provided</scope>
         </dependency>
         
         <dependency>
             <groupId>cn.openapis</groupId>
             <artifactId>hy.common.file</artifactId>
-            <version>1.3.4</version>
+            <version>1.5.1</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -91,7 +91,16 @@
         <dependency>
             <groupId>org.neo4j.driver</groupId>
             <artifactId>neo4j-java-driver</artifactId>
-            <version>4.4.11</version>
+            <version>5.28.10</version>
+        </dependency>
+        
+        <!-- 配合Neo4j -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.108.Final</version>
+            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
         
         <!-- Spring -->
@@ -140,7 +149,7 @@
         <dependency>
             <groupId>cn.openapis</groupId>
             <artifactId>hy.common.tpool</artifactId>
-            <version>1.3.8</version>
+            <version>1.4.0</version>
             <scope>test</scope>
         </dependency>
         
@@ -155,7 +164,7 @@
         <dependency>
             <groupId>cn.openapis</groupId>
             <artifactId>hy.common.xjava</artifactId>
-            <version>4.5.6</version>
+            <version>4.6.5</version>
             <scope>test</scope>
         </dependency>
         
@@ -257,7 +266,7 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.6.0</version>
+                <version>0.8.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>
