@@ -47,6 +47,8 @@ import org.neo4j.driver.Result;
  * @createDate  2023-06-02
  * @version     v1.0
  *              v2.0 2023-10-18  添加：是否附加触发额外参数 triggerParams
+ *              v3.0 2025-11-24  优化：生成分页对象时，设置XJavaID
+ *                               添加：对外提删除克隆生成的分页对象
  */
 public final class XCQL extends AnalyseTotal implements Comparable<XCQL> ,XJavaID
 {
@@ -302,6 +304,33 @@ public final class XCQL extends AnalyseTotal implements Comparable<XCQL> ,XJavaI
         {
             $Logger.warn("未加载XJava组件" ,exce);
             $CQLPool.put(i_XID ,i_XObject);
+        }
+    }
+    
+    
+    
+    /**
+     * 删除对象池中的对象，在无XJava的环境中使用的兼容模式
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2025-11-24
+     * @version     v1.0
+     *
+     * @param i_XID 对象XID
+     * @return
+     */
+    private static void xjavaRemoveObject(String i_XID)
+    {
+        try
+        {
+            // 用反射的方式执行 XJava.remove()
+            Method v_XJavaPutObjectMethod = Help.forName("org.hy.common.xml.XJava").getMethod("remove" ,String.class);
+            StaticReflect.invoke(v_XJavaPutObjectMethod ,i_XID);
+        }
+        catch (Exception exce)
+        {
+            $Logger.warn("未加载XJava组件" ,exce);
+            $CQLPool.remove(i_XID);
         }
     }
     
@@ -606,10 +635,11 @@ public final class XCQL extends AnalyseTotal implements Comparable<XCQL> ,XJavaI
             v_NewXCQL.setDataSourceCQL(i_XCQL.getDataSourceCQL());
             v_NewXCQL.setResult(       i_XCQL.getResult());
             v_NewXCQL.getContent().setCqlText(v_PaginCQLText);
+            v_NewXCQL.setXJavaID("XPaging_" + v_PMKey);
             
             // 注意：这里是Key是i_XCQL，而不是v_NewXCQL的uuid
             $PagingMap.put(v_PMKey ,v_NewXCQL);
-            xjavaPutObject("XPaging_" + v_PMKey ,v_NewXCQL);
+            xjavaPutObject(v_NewXCQL.getXJavaID() ,v_NewXCQL);
             return v_NewXCQL;
         }
         else
@@ -621,6 +651,28 @@ public final class XCQL extends AnalyseTotal implements Comparable<XCQL> ,XJavaI
             
             $PagingMap.put(v_PMKey ,i_XCQL);
             return i_XCQL;
+        }
+    }
+    
+    
+    
+    /**
+     * 从缓存中删除之前生成的分页对象，好方便二次生成分页对象
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2025-11-24
+     * @version     v1.0
+     *
+     * @param i_XJavaID
+     */
+    public synchronized static void removePaging(String i_XJavaID)
+    {
+        // 仅限于克隆生成的分页对象才能被删除
+        // 对于非克隆生成的无法回退、无法二次生成分页对象
+        if ( i_XJavaID.startsWith("XPaging_") )
+        {
+            xjavaRemoveObject(i_XJavaID);
+            $PagingMap.remove(StringHelp.replaceFirst(i_XJavaID ,"XPaging_" ,""));
         }
     }
     
