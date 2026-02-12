@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hy.common.Busway;
-import org.hy.common.ExpireMap;
+import org.hy.common.ExpireCache;
 import org.hy.common.Help;
 import org.hy.common.StringHelp;
 import org.hy.common.xcql.XCQLURL;
@@ -59,9 +59,9 @@ import org.hy.common.xcql.XCQLURL;
 public class XCQLFilter implements Filter
 {
     
-    private static final ExpireMap<Long ,XCQLURL> $Requests  = new ExpireMap<Long ,XCQLURL>();
+    private static final ExpireCache<Long ,XCQLURL> $Requests  = new ExpireCache<Long ,XCQLURL>();
     
-    private static final Busway<XCQLURL>          $CQLBusway = new Busway<XCQLURL>(1000);
+    private static final Busway<XCQLURL>            $CQLBusway = new Busway<XCQLURL>(1000);
     
     
     
