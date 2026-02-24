@@ -67,10 +67,10 @@ public final class XCQL extends AnalyseTotal implements Comparable<XCQL> ,XJavaI
     public  static final TablePartitionBusway<String ,XCQLLog> $CQLBuswayTP         = new TablePartitionBusway<String ,XCQLLog>();
     
     /** 所有CQL执行日志，有一定的执行顺序。默认只保留5000条执行过的CQL语句 */
-    public  static final Busway<XCQLLog>                       $CQLBusway           = new Busway<XCQLLog>(5000);
+    public  static final Busway<XCQLLog>                       $CQLBusway           = new Busway<XCQLLog>(1000);
     
     /** CQL执行异常的日志。默认只保留9000条执行异常的CQL语句 */
-    public  static final Busway<XCQLLog>                       $CQLBuswayError      = new Busway<XCQLLog>(9000);
+    public  static final Busway<XCQLLog>                       $CQLBuswayError      = new Busway<XCQLLog>(1000);
     
     /** XCQL */
     public  static final String                                $XCQLErrors          = "XCQL-Errors";

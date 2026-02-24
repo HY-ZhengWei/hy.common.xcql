@@ -25,8 +25,8 @@ import org.hy.common.xcql.XCQLURL;
  * 记录一次页面访问所对应执行的CQL信息
  * 
  * 过滤器的初始化参数：1. exclusions  排除哪些URL不被记录。多个正则表达式规则间用,逗号分隔
- *                  2. cachesize   缓存大小。用于 $CQLBusway
- *                  3. timeout     超时时长，单位：秒。用于 $Requests
+ *                2. cachesize   缓存大小。用于 $CQLBusway
+ *                3. timeout     超时时长，单位：秒。用于 $Requests
  * 
  * 
     <!-- 记录一次页面访问所对应执行的CQL信息  ZhengWei(HY) Add 2023-06-02 -->
