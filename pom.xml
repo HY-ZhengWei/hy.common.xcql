@@ -6,7 +6,7 @@
 
     <groupId>cn.openapis</groupId>
     <artifactId>hy.common.xcql</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <packaging>jar</packaging>
 
     <name>cn.openapis.hy.common.xcql</name>
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.7.18</version>
+            <version>3.5.11</version>
             <optional>true</optional>
             <scope>provided</scope>
             <exclusions>
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>cn.openapis</groupId>
             <artifactId>hy.common.tpool</artifactId>
-            <version>1.4.0</version>
+            <version>1.4.1</version>
             <scope>test</scope>
         </dependency>
         
