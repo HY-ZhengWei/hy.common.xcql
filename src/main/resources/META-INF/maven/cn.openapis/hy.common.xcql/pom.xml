@@ -6,7 +6,7 @@
 
     <groupId>org</groupId>
     <artifactId>hy.common.xcql</artifactId>
-    <version>1.1.8</version>
+    <version>1.1.9</version>
     <packaging>jar</packaging>
 
     <name>org.hy.common.xcql</name>
@@ -15,8 +15,8 @@
     <description>图谱组件XCQL（Graph component XCQL）</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.base</artifactId>
-            <version>1.0.206</version>
+            <version>1.0.207</version>
             <scope>provided</scope>
         </dependency>
         
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>6.2.16</version>
+            <version>7.0.6</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.5.11</version>
+            <version>4.0.5</version>
             <optional>true</optional>
             <scope>provided</scope>
         </dependency>
@@ -132,7 +132,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.xjava</artifactId>
-            <version>4.7.4</version>
+            <version>4.8.0</version>
             <scope>test</scope>
         </dependency>
         
