@@ -6,7 +6,7 @@
 
     <groupId>org</groupId>
     <artifactId>hy.common.xcql</artifactId>
-    <version>1.1.9</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>org.hy.common.xcql</name>
@@ -15,8 +15,8 @@
     <description>图谱组件XCQL（Graph component XCQL）</description>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -132,7 +132,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.xjava</artifactId>
-            <version>4.8.0</version>
+            <version>4.7.9</version>
             <scope>test</scope>
         </dependency>
         
